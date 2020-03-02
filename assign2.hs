@@ -35,7 +35,7 @@ wordFreq s = map (\x -> (head x, length x)) $ group $ sort $ words ([toLower low
 -- take the n most common words in a string
 wordFreqN :: Int -> String -> [(String, Int)]
 wordFreqN 0 s = []
-wordFreqN n s = take n (reverse (sortBy (compare `on` snd) ((wordFreq s))))
+wordFreqN n s = take n (reverse (sortBy (compare `on` snd) (wordFreq s)))
 -- sort the values from most frequency to least
 -- then take the n amount requested
 
