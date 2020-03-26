@@ -1,5 +1,9 @@
 -- Roslyn Parker
--- 23 March 2020
+-- 26 March 2020
+
+import System.IO.Error
+import System.Directory
+import System.Environment
 
 -- preforms a recursive Is
 -- lists one file / directory per line
@@ -17,4 +21,12 @@
 -- starting point with no indent
 -- give error if the path doesn't exist
 
--- use hoogle to find modules to write this program
+-- use catch to catch an IO error
+
+listFiles :: String -> IO
+listFiles (dir:xs) = let files = listDirectory dir
+                     if isDirectory dir
+                     then listDirectory dir
+                     else print "Error: directory not found"
+                    
+
