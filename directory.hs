@@ -1,9 +1,10 @@
 -- Roslyn Parker
--- 26 March 2020
+-- 28 March 2020
 
-import System.IO.Error
 import System.Directory
-import System.Environment
+import System.IO
+import Data.Map
+import Data.Time
 
 -- preforms a recursive Is
 -- lists one file / directory per line
@@ -23,10 +24,31 @@ import System.Environment
 
 -- use catch to catch an IO error
 
-listFiles :: String -> IO
-listFiles (dir:xs) = let files = listDirectory dir
-                     if isDirectory dir
-                     then listDirectory dir
-                     else print "Error: directory not found"
+listFiles ::  String -> IO [FilePath]
+listFiles dir = if boolFromIO (doesDirectoryExist dir)
+                then listDirectory dir
+                else error "Error: Directory doesn't exist"
+
+showDetail :: String -> (IO Integer, IO UTCTime, IO Bool)
+showDetail file = (getFileSize file, getModificationTime file, doesDirectoryExist file)
+
+boolFromIO :: IO Bool -> Bool
+boolFromIO = boolFromIO
+
+--getModificationTime
+--getFileSize
+--doesDirectoryExist 
+
+-- ex: 
+-- Hello
+--     File.txt
+--     File.exe
+-- World
+--     Hi
+--         File.exe
+--         File.txt
+--     Hey
+
+
                     
 
