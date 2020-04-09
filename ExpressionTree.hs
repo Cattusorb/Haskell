@@ -19,20 +19,12 @@ module Example.ExpressionTree
 -- Data Constructor for an Expression Tree
 data ExprTree = Value Int | Op String (ExprTree)(ExprTree)
 
---instance Show ExprTree where
---    show (Value a) = a -- Couldn't match type `Int' with `[Char]' - Expected type: String - Actual type: Int
---    show (Op o l r) = case o of 
---                "*" -> o ++ " " ++ show l ++ " " ++ show r
---                "+" -> o ++ " " ++ show l ++ " " ++ show r
---                "-" -> o ++ " " ++ show l ++ " " ++ show r
-
--- Prints out an Expression Tree
-showTree :: ExprTree -> String
-showTree (Value a) = show a
-showTree (Op o l r) = case o of 
-                "*" -> o ++ " " ++ showTree l ++ " " ++ showTree r
-                "+" -> o ++ " " ++ showTree l ++ " " ++ showTree r
-                "-" -> o ++ " " ++ showTree l ++ " " ++ showTree r
+instance Show ExprTree where
+    show (Value a) = show a
+    show (Op o l r) = case o of 
+                "*" -> o ++ " " ++ show l ++ " " ++ show r
+                "+" -> o ++ " " ++ show l ++ " " ++ show r
+                "-" -> o ++ " " ++ show l ++ " " ++ show r
 
 -- Evaulates an Expression Tree
 evaluateTree :: ExprTree -> Int
