@@ -1,7 +1,7 @@
 --------------------------
 -- Module : Example.ExpressionTree
 -- Author : Roslyn Parker
--- Date   : 26 March 2020
+-- Date   : 9 April 2020
 --
 -- An expression tree in binary tree format
 -- ex:  3 * (4 + 5) turns into : 
@@ -13,26 +13,33 @@
 --      4   5 
 --------------------------
 
-data OpNode = Add
-            | Sub
-            | Mul
+module Example.ExpressionTree
+(ExprTree, evaluateTree, showTree) where
 
-data ExprTree = Value Integer | Compute OpNode ExprTree ExprTree
+-- Data Constructor for an Expression Tree
+data ExprTree = Value Int | Op String (ExprTree)(ExprTree)
 
--- evaluate 
-evaluateTree :: ExprTree -> Integer
-evaluateTree (Value x) = x
-evaluateTree (Compute Add l r) = evaluateTree l  + evaluateTree r
-evaluateTree (Compute Sub l r) = evaluateTree l  - evaluateTree r
-evaluateTree (Compute Mul l r) = evaluateTree l  * evaluateTree r
+--instance Show ExprTree where
+--    show (Value a) = a -- Couldn't match type `Int' with `[Char]' - Expected type: String - Actual type: Int
+--    show (Op o l r) = case o of 
+--                "*" -> o ++ " " ++ show l ++ " " ++ show r
+--                "+" -> o ++ " " ++ show l ++ " " ++ show r
+--                "-" -> o ++ " " ++ show l ++ " " ++ show r
 
--- show
+-- Prints out an Expression Tree
 showTree :: ExprTree -> String
-showTree (Value x) = show x
-showTree (Compute Add l r) = showTree l ++ " + " ++ showTree r
-showTree (Compute Sub l r) = showTree l ++ " - " ++ showTree r
-showTree (Compute Mul l r) = showTree l ++ " * " ++ showTree r
+showTree (Value a) = show a
+showTree (Op o l r) = case o of 
+                "*" -> o ++ " " ++ showTree l ++ " " ++ showTree r
+                "+" -> o ++ " " ++ showTree l ++ " " ++ showTree r
+                "-" -> o ++ " " ++ showTree l ++ " " ++ showTree r
 
--- kind *->* meaning that its type of value is not fixed
--- an instance of ExpressionTree should be either a 
--- value or an operation node
+-- Evaulates an Expression Tree
+evaluateTree :: ExprTree -> Int
+evaluateTree (Value x) = x
+evaluateTree (Op o l r) = case o of 
+                "*" -> evaluateTree l * evaluateTree r
+                "+" -> evaluateTree l + evaluateTree r 
+                "-" -> evaluateTree l - evaluateTree r
+
+
