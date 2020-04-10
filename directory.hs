@@ -1,33 +1,10 @@
 -- Roslyn Parker
--- 9 April 2020
+-- 10 April 2020
 
 import System.Directory
 import System.IO
 import Data.Map as Map
 import Data.Time as Time
-
-main :: IO ()
-main = do 
-    path <- getLine
-    if path == ""
-        then return()
-        else do 
-            putStrLn $ listFiles path
-
-listFiles ::  String -> String
-listFiles dir = if boolFromIO (doesDirectoryExist dir)
-                then listDirectory dir
-                else error "Error: Directory doesn't exist"
-
-showDetail :: String -> (IO Integer, IO UTCTime, IO Bool)
-showDetail file = (getFileSize file, getModificationTime file, doesDirectoryExist file)
-
-boolFromIO :: IO Bool -> Bool
-boolFromIO = boolFromIO
-
---getModificationTime
---getFileSize
---doesDirectoryExist 
 
 -- ex: 
 -- Hello
@@ -39,6 +16,31 @@ boolFromIO = boolFromIO
 --         File.txt
 --     Hey
 
+main :: IO ()
+main = do 
+    path <- getLine
+    if path == ""
+        then return()
+        else do 
+            listFiles path 0
 
-                    
+listFiles :: FilePath -> Int -> IO [FilePath]
+listFiles dir i = do 
+                   isDir <- doesDirectoryExist dir -- take IO out of box and into just Bool
+                   if isDir
+                   then do
+                       files <- listDirectory dir
+                       return files
+                   else do 
+                       putStrLn "Directory doesn't exist."
+                       return ()
 
+showDir dirPath i = do
+    putStrLn dirPath
+    dir <- listDirectory dirPath
+    mapM_ listFiles $ dir
+
+showFile filePath i = do
+    size <- getFileSize filePath
+    time <- getModificationTime filePath
+    putStrLn i ++ filePath ++ " " ++ size ++ " " ++ time
