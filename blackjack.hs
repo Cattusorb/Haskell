@@ -5,11 +5,13 @@
 import Example.Cards
 
 main = do 
+    putStrLn <- "How many cards?"
+    cardCount <- getLine
     return ()
 
-drawHand :: Int ->Deck ->([Card],Deck)
+drawHand :: Int -> Deck ->([Card],Deck)
 drawHand n deck = --something
-totalCards :: [Card] ->Maybe Int
+totalCards :: [Card] -> Maybe Int
 
 {-- 
 If the total of the cards drawn is >= 21
