@@ -8,7 +8,7 @@ main = do
     return ()
 
 drawHand :: Int ->Deck ->([Card],Deck)
-
+drawHand n deck = --something
 totalCards :: [Card] ->Maybe Int
 
 {-- 
